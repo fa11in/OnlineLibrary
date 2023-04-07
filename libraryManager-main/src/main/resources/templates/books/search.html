@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Search</title>
+</head>
+<body>
+
+<form th:method="get" th:action="@{/books/search}">
+
+    <label for="title">Введите поисковой запрос:</label>
+    <input type="text" id="title" name="title"/>
+    <button type="submit">Искать</button>
+
+</form>
+
+<br/>
+
+<!--/*@thymesVar id="book" type="kz.web.library.models.Book"*/-->
+<div th:if="${isFound}" th:each="book : ${books}">
+    <div th:text="${book.getDescription()}"></div>
+    <div th:if="${book.isOwned()}">
+        Книга сейчас у: <div th:text="${book.getOwner().getFullname()}"></div>
+    </div>
+    <div th:if="${!book.isOwned()}">
+        Книга свободна
+    </div>
+    <br/>
+</div>
+
+<div th:if="${!isFound}">
+    Книг не найдено
+</div>
+
+</body>
+</html>

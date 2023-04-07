@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Show</title>
+</head>
+<body>
+
+<!--/*@thymesVar id="book" type="kz.web.library.models.Book"*/-->
+<!--/*@thymesVar id="person" type="kz.web.library.models.Person"*/-->
+
+<div th:object="${book}" th:text="${book.getDescription()}"></div>
+<br/>
+<div th:if="${isOwned}">
+    <div>Книга сейчас у: </div>
+    <div th:object="${person}" th:text="${person.getFullname()}"></div>
+    <form th:method="patch" th:action="@{/books/{id}/return(id=${book.getId()})}">
+        <button type="submit">Освободить</button>
+    </form>
+</div>
+
+<div th:if="${!isOwned}">
+    <div>Эта книга свободна. Кому ее назначить?</div>
+    <br/>
+    <form th:method="patch" th:action="@{/books/{id}/assign(id=${book.getId()})}">
+        <label>Выберите человека</label>
+        <select id="person" th:object="${person}" th:field="*{id}">
+            <option th:each="person : ${people}" th:value="${person.getId()}"
+                    th:text="${person.getFullname()}"></option>
+        </select>
+        <button type="submit">Назначить</button>
+    </form>
+</div>
+
+<hr/>
+
+<button th:href="@{/books/{id}/edit(id=${book.getId()})}">Редактировать</button>
+<br/>
+<form th:action="@{/books/{id}(id=${book.getId()})}" th:method="delete">
+    <button type="submit">Удалить</button>
+</form>
+</body>
+</html>

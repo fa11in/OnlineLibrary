@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Index</title>
+</head>
+<body>
+
+<div th:insert="vendor/navbar"></div>
+
+<!--/*@thymesVar id="book" type="kz.web.library.models.Book"*/-->
+<!--/*@thymesVar id="books" type="java.util.List"*/-->
+<div th:each="book : ${books}">
+    <a th:text="${book.getDescription()}"
+       th:href="@{/books/{id}(id=${book.getId()})}">Book</a>
+</div>
+<hr/>
+<a th:href="@{/books/new}">Добавить книгу</a>
+</body>
+</html>

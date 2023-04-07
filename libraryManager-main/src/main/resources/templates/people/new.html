@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>New person</title>
+</head>
+<body>
+
+<!--/*@thymesVar id="person" type="kz.web.library.models.Person"*/-->
+<form th:method="POST" th:action="@{/people}" th:object="${person}">
+    <label for="fullname">Введите ФИО:</label>
+    <input type="text" th:field="*{fullname}" id="fullname"/>
+    <div style="color:red" th:if="${#fields.hasErrors('fullname')}" th:errors="*{fullname}">Неверное имя</div>
+    <br/>
+    <label for="year">Год рождения: </label>
+    <input type="text" th:field="*{year}" id="year"/>
+    <div style="color:red" th:if="${#fields.hasErrors('year')}" th:errors="*{year}">Неверный год</div>
+    <br/>
+    <button type="submit">Добавить</button>
+</form>
+<a th:href="@{/people}">Назад</a>
+
+</body>
+</html>
